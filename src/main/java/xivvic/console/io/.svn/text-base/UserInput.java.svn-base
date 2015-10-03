@@ -1,0 +1,107 @@
+package xivvic.base.util.app.io;
+
+import xivvic.base.util.predicate.string.StringPredicate;
+
+/**
+ * Class to be used to gather information from the user.
+ * A prompt is required, but other fields are optional.
+ * 
+ * @author cturner
+ */
+public class UserInput
+{
+	private String prompt;
+	private String title;
+	private String dv;    // Default value
+	private String help;
+	private boolean optional;
+
+	private StringPredicate test;
+	
+	public UserInput(String prompt)
+	{
+		this.prompt = prompt;
+	}
+
+	public String getPrompt()
+	{
+		return prompt;
+	}
+
+	public void setPrompt(String prompt)
+	{
+		this.prompt = prompt;
+	}
+
+	public String getTitle()
+	{
+		return title;
+	}
+
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
+
+	public String getHelp()
+	{
+		return help;
+	}
+
+	public void setHelp(String help)
+	{
+		this.help = help;
+	}
+
+	public void setTest(StringPredicate test)
+	{
+		this.test = test;
+	}
+
+	public String toString()
+	{
+		StringBuffer sb = new StringBuffer();
+	
+		sb.append("UI[");
+		sb.append(getPrompt());
+		sb.append("]");
+		
+		return sb.toString();
+	}
+
+	/**
+	 * Apply optional StringPredicate for this UserInput object, to the proposed String.
+	 * Return null if it passes the test or an explanation if it fails.
+	 * 
+	 */
+	public String test(String value)
+	{
+		if (test == null)
+			return null;
+		
+		if (! test.test(value))
+			return test.explain();
+		
+		return null;
+	}
+
+	public void setDefault(String dv)
+	{
+		this.dv = dv;
+	}
+	
+	public String getDefault()
+	{
+		return dv;
+	}
+
+	public void setOptional(boolean b)
+	{
+		optional = b;
+	}
+	
+	public boolean isOptional()
+	{
+		return optional;
+	}
+}

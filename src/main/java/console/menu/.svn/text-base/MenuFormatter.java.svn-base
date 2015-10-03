@@ -1,0 +1,73 @@
+package console.menu;
+
+import java.util.Iterator;
+
+import com.xivvic.util.text.TextFormatter;
+
+public class MenuFormatter
+{
+	public static String format(IMenu menu, boolean isSubmenu)
+	{
+		if (menu == null)
+		{
+			return "Menu was null";
+		}
+		
+		int width = 30;
+		StringBuffer sb = new StringBuffer();
+		
+		String line = TextFormatter.edgedLine('*', '-', width);
+		sb.append(line);
+		sb.append("\n");
+		String title = menu.getTitle();
+		String box = TextFormatter.padLeft(title, 3 + title.length(), ' ');
+		box = TextFormatter.pad(box, width, ' ');
+		sb.append("*");
+		sb.append(box);
+		sb.append("*");
+		sb.append("\n");
+		sb.append(line);
+		sb.append("\n");
+		
+		int index = 1;
+
+		Iterator<IMenuItem> it = menu.iterator();
+		while (it.hasNext())
+		{
+			IMenuItem item = it.next();
+			String  number = TextFormatter.padLeft(Integer.toString(index), 2, ' ');
+			sb.append(number);
+			index++;
+			sb.append(": ");
+			String sc = item.getShortcut();
+			String text = TextFormatter.pad(sc, 8, ' ');
+			sb.append(text);
+			sb.append(": ");
+			sb.append(item.getText());
+			sb.append("\n");
+		}
+		
+		String number = TextFormatter.padLeft(Integer.toString(0), 2, ' ');
+		sb.append(number);
+		sb.append(": ");
+		String text = TextFormatter.pad(null, 8, ' ');
+		sb.append(text);
+		sb.append(": ");
+		String upText = MenuFormatter.getUpOneText(isSubmenu); 
+		sb.append(upText);
+		sb.append("\n");
+		
+		String s = sb.toString();
+		
+		return s;
+	}
+	
+	private static String getUpOneText(boolean isSubmenu)
+	{
+		if (isSubmenu)
+			return "Return to previous menu";
+		
+		return "Exit the application";
+	}
+
+}

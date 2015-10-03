@@ -1,0 +1,44 @@
+package console.menu;
+
+import console.IAction;
+
+public class BatchAction
+	implements IAction
+{
+	String[] cmds = null;
+	
+	public BatchAction()
+	{
+	}
+	
+	public BatchAction(String[] commands)
+	{
+		cmds = commands;
+	}
+	
+	public String[] commands()
+	{
+		return cmds;
+	}
+
+	public void invoke(Object param)
+	{
+		// At present ...
+		// Nothing to do in this method.  Each of the commands in the array
+		// will be passed to the MenuManager to invoke.
+		//
+		
+		System.out.println("Batch command: [" + param.toString() + "]");
+	}
+
+	public String description()
+	{
+		return "Action that will hold commands for batch execution";
+	}
+
+	public String name()
+	{
+		return "Batch action";
+	}
+	
+}

@@ -1,0 +1,12 @@
+package console.menu;
+
+import com.xivvic.util.action.Action;
+
+
+
+public interface IMenuItem
+	extends Action
+{
+	public String            getText();
+	public String        getShortcut();
+}

@@ -1,0 +1,43 @@
+package xivvic.base.util.app.io;
+
+import xivvic.base.util.app.Action;
+
+/**
+ * OpSpec is a specification for an operation that is to be performed.
+ * This class is useful to capture both the text that indicates an action
+ * and any following parameters.  Additionally, it can be uses to store a
+ * reference to an Action that will implement the functionality.
+ * 
+ * @author cturner
+ */
+public class OpSpec
+{
+	private final String       text;
+	private final String  parameter;
+	private Action    action;
+	
+	public OpSpec(String text, String param)
+	{
+		this.text = text;
+		this.parameter = param;
+	}
+	
+	public Action getAction()
+	{
+		return action;
+	}
+	public void setAction(Action action)
+	{
+		this.action = action;
+	}
+	public String getText()
+	{
+		return text;
+	}
+	public String getParameter()
+	{
+		return parameter;
+	}
+	
+	
+}

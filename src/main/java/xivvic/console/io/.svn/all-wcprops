@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io
+END
+UserInput.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/UserInput.java
+END
+TellUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/TellUser.java
+END
+OpSpec.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/OpSpec.java
+END
+MessageChannel.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/MessageChannel.java
+END
+InputProcessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/InputProcessor.java
+END
+AskUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/AskUser.java
+END
+Choices.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/Choices.java
+END
+Choice.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/horvix/!svn/ver/19/trunk/xivvic.base.util/src/xivvic/base/util/app/io/Choice.java
+END
