@@ -4,7 +4,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
-import xivvic.console.util.TextFormatter;
+import xivvic.util.text.TextFormatter;
 
 public class MenuFormatter
 {
