@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-import xivvic.util.ArgUtil;
+import xivvic.util.arg.ArgUtil;
 
 /**
  * Base class for processing action inputs.
