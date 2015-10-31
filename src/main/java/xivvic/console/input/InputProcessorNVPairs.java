@@ -8,7 +8,9 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import xivvic.util.arg.ArgUtil;
 
@@ -22,7 +24,7 @@ public class InputProcessorNVPairs
 	extends InputProcessorBase
 {
 	public static InputProcessor   DEFAULT = new InputProcessorNVPairs(null, null, null);
-	protected final static Logger      LOG = Logger.getLogger(InputProcessorNVPairs.class.getName());
+	protected final static Logger      LOG = LoggerFactory.getLogger(InputProcessorNVPairs.class.getName());
 
 	public InputProcessorNVPairs(Map<String, Object> map, Set<String> required, Map<String, Function<String, ?>> converters)
 	{
@@ -73,7 +75,7 @@ public class InputProcessorNVPairs
 		if (args == null)
 		{
 			String msg = String.format("Failed to retrieve arg map from parameter: [%s]", params);
-			LOG.warning(msg);
+			LOG.warn(msg);
 			return null;
 		}
 		
@@ -89,7 +91,7 @@ public class InputProcessorNVPairs
 		if (! all_there)
 		{
 			String msg = String.format("Not all args required [%s] args present", required);
-			LOG.warning(msg);
+			LOG.warn(msg);
 			return null;
 		}
 

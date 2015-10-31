@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for processing action inputs.
@@ -17,7 +19,7 @@ import java.util.logging.Logger;
 public abstract class InputProcessorBase
 	implements InputProcessor
 {
-	protected final static Logger LOG = Logger.getLogger(InputProcessorBase.class.getName());
+	protected final static Logger LOG = LoggerFactory.getLogger(InputProcessorBase.class.getName());
 
 	/**
 	 * Synthetic keys to generate for a given property
