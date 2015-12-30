@@ -46,7 +46,7 @@ public class ConsoleApp
 	public Action registerInitAction(Action action)
 	{
 		Action prev = initAction;
-		initAction       = action;
+		initAction  = action;
 		return prev;
 	}
 
@@ -94,7 +94,7 @@ public class ConsoleApp
 	}
 	
 	
-	private void initialize()
+	protected void setUp()
 	{
 		if (initAction == null)
 		{
@@ -151,7 +151,7 @@ public class ConsoleApp
 	
 	public void doLifecycle()
 	{
-		initialize();
+		setUp();
 		batch();
 		run();
 		complete();
