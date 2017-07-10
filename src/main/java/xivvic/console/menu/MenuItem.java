@@ -3,7 +3,7 @@ package xivvic.console.menu;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import xivvic.console.action.Action;
-import xivvic.console.app.Enablement;
+import xivvic.console.util.Enablement;
 
 @Data
 @Accessors(fluent = true)

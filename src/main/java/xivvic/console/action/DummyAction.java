@@ -6,14 +6,12 @@ package xivvic.console.action;
  * All this class does is provide a NOP implementation for ActionBase's
  * abstract invoke_internal() method.
  *
- * @author Reid
- *
  */
 public class DummyAction
 extends ActionBase
 {
 	/**
-	 * Constructs a dummy action that is enabled or not based on the is_enabled paramter
+	 * Constructs a dummy action that is enabled or not based on the is_enabled parameter
 	 *
 	 * @param name a name for this placeholder action
 	 * @param description a description for this placeholder action

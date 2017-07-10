@@ -1,4 +1,4 @@
-package xivvic.console.app;
+package xivvic.console;
 
 import java.io.PrintStream;
 import java.text.DateFormat;
@@ -21,7 +21,7 @@ import xivvic.console.menu.MenuManager;
  *
  */
 
-public class ConsoleApp
+public class Application
 {
 	/**
 	 * Note these formatters are not thread safe !!

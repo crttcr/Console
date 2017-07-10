@@ -4,7 +4,7 @@
  *
  * Copyright (c) 2005 Xivvic.com
  */
-package xivvic.console.app;
+package xivvic.console.util;
 
 import java.io.IOException;
 import java.io.Writer;

@@ -1,6 +1,6 @@
 package xivvic.console.action;
 
-import xivvic.console.app.Enablement;
+import xivvic.console.util.Enablement;
 
 public interface Action
 extends Enablement

@@ -1,4 +1,4 @@
-package xivvic.console.app;
+package xivvic.console.util;
 
 public interface Enablement
 {
