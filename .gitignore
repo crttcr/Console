@@ -1,5 +1,50 @@
-/bin/
-/build/
-/gradle/
+# Java-related files
+#
+*.class
+*.jar
+*.war
+*.ear
+
+# Virtual machine crash log
+hs_error_pid*
+
+# Gradle-related files
+#
+.cache-main
+.cache-main/*
+.cache-tests
+.cache-tests/*
+.gradle/*
 .gradle
+build/
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+#
+!gradle-wrapper.jar
+
+# Directories
+#
+/bin/
+/.apt_generated/
+/gradle/
+
+# SCM
 .svn
+
+# OSX Related
+.DS_Store
+.Trashes
+*.swp
+*.lock
+
+## Eclipse
+.classpath
+.project
+.settings
+.settings/
+
+## Allow UML Diagram
+##
+!OptionParsing.png
