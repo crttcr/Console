@@ -24,7 +24,4 @@ extends Enablement
 	 * @param param
 	 */
 	public void invoke(Object param);
-
-
-
 }

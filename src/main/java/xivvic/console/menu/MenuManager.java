@@ -27,7 +27,7 @@ public class MenuManager
 	private Deque<Menu> stack = new LinkedList<>();
 	private final ActionManager am;
 
-	private MenuManager(ActionManager am)
+	public MenuManager(ActionManager am)
 	{
 		this.am = am;
 	}
@@ -41,18 +41,6 @@ public class MenuManager
 	{
 		return am.commands(context);
 	}
-
-	/**
-	 * Reset the MenuManager to have only the given menu which will be the top and only level.
-	 *
-	 * @param menu
-	 */
-	public void reset()
-	{
-		stack.clear();
-		ActionManager.getInstance().reset();
-	}
-
 
 	public void addCoreActions()
 	{
@@ -68,7 +56,6 @@ public class MenuManager
 			}
 		};
 
-		ActionManager am = ActionManager.getInstance();
 		am.register(action, null, "bye");
 		am.register(action, null, "exit");
 		am.register(action, null, "quit");
@@ -106,8 +93,7 @@ public class MenuManager
 	 */
 	public void addHiddenAction(String text, Action action)
 	{
-		ActionManager amg = ActionManager.getInstance();
-		amg.register(action, null, text);
+		am.register(action, null, text);
 	}
 
 	/**
@@ -128,8 +114,6 @@ public class MenuManager
 			return;
 		}
 
-		ActionManager amg = ActionManager.getInstance();
-
 		String left = menu.code();
 		int index = 0;
 		Iterator<MenuItem> it = menu.iterator();
@@ -139,8 +123,8 @@ public class MenuManager
 
 			index++;
 
-			amg.register(item.action(), left, item.shortcut());
-			amg.register(item.action(), left, Integer.toString(index));
+			am.register(item.action(), left, item.shortcut());
+			am.register(item.action(), left, Integer.toString(index));
 		}
 	}
 
@@ -180,9 +164,7 @@ public class MenuManager
 			return null;
 		}
 
-		ActionManager amg = ActionManager.getInstance();
-
-		Action action = amg.command(menu.code(), token);
+		Action action = am.command(menu.code(), token);
 
 		if (action != null)
 		{
@@ -192,7 +174,7 @@ public class MenuManager
 		// If the current menu fails, try looking up the token in the
 		// global context.
 		//
-		action = amg.command(null, token);
+		action = am.command(null, token);
 		return action;
 	}
 

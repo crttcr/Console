@@ -1,17 +1,25 @@
 package xivvic.console;
 
+import static xivvic.console.action.ActionTiming.INITIALIZE;
+import static xivvic.console.action.ActionTiming.POST_INITIALIZE;
+import static xivvic.console.action.ActionTiming.RUNTIME_POST_ACTION_EXEC;
+import static xivvic.console.action.ActionTiming.SHUTDOWN;
+
 import java.io.PrintStream;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 import xivvic.console.action.Action;
+import xivvic.console.action.ActionManager;
+import xivvic.console.action.ActionTiming;
 import xivvic.console.action.BatchAction;
 import xivvic.console.interact.Stdin;
 import xivvic.console.menu.MenuManager;
 
 /**
- *
- * App -- base class for console applications.
+ * Application -- base class for console applications.
  * Provides callback actions that will be called
  *
  * A) to initialize the application
@@ -31,56 +39,52 @@ public class Application
 	private DateFormat tf = DateFormat.getTimeInstance(DateFormat.LONG);
 	private String  message;
 
-	private BatchAction batchCallback;
-	private Action initAction;
+	private BatchAction batchCallback = null;
+
 	private Action completeAction;
-	private Action postCommand;
 	private PrintStream out = System.out;
 	private MenuManager mm;
+	private ActionManager am;
 
+	public Application(MenuManager mm, ActionManager am)
+	{
+		this.mm = Objects.requireNonNull(mm);
+		this.am = Objects.requireNonNull(am);
+	}
 
 	/**
 	 * Register an action for the the application to perform before it begins
-	 * execution.  Returns the previous action, if for some reason it is
-	 * called more than once.
+	 * execution.
 	 *
 	 */
-	public Action registerInitAction(Action action)
+	public void registerInitAction(Action action)
 	{
-		Action prev = initAction;
-		initAction  = action;
-		return prev;
-	}
-
-	/**
-	 * Register an action for the the application to perform after the
-	 * console application completes.
-	 *
-	 */
-	public Action registerCompleteAction(Action action)
-	{
-		Action prev = completeAction;
-		completeAction   = action;
-		return prev;
-	}
-
-	/**
-	 * Register an action for the the application to perform after the
-	 * console application completes.
-	 *
-	 */
-	public Action registerPostMenuAction(Action action)
-	{
-		Action prev = postCommand;
-		postCommand      = action;
-		return prev;
+		am.register(action, INITIALIZE);
 	}
 
 	public void registerBatch(BatchAction ba)
 	{
-		batchCallback = ba;
+		am.register(ba, null, ba.name());
 	}
 
+	/**
+	 * Register an action for the the application to perform after
+	 * each menu action
+	 */
+	public void registerPostMenuAction(Action action)
+	{
+		am.register(action, RUNTIME_POST_ACTION_EXEC);
+	}
+
+	/**
+	 * Register an action for the the application to perform after the
+	 * console application completes.
+	 *
+	 */
+	public void registerCompleteAction(Action action)
+	{
+		am.register(action, SHUTDOWN);
+	}
 
 	/** Sets the output stream that will receive the console's text output.
 	 * If NULL is passed in as a parameter, will revert to System.out
@@ -98,14 +102,17 @@ public class Application
 
 	protected void setUp()
 	{
-		if (initAction == null)
+		ActionTiming[] at = { INITIALIZE, POST_INITIALIZE };
+
+		setMessage("Starting console application.");
+		out.println(message);
+		for (ActionTiming timing : at)
 		{
-			setMessage("Starting console application.");
-			out.println(message);
-		}
-		else
-		{
-			initAction.invoke(null);
+			List<Action> actions = am.getActionsFor(timing);
+			for (Action a : actions)
+			{
+				a.invoke(null);
+			}
 		}
 	}
 
