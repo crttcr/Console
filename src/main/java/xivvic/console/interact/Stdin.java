@@ -37,6 +37,8 @@ import java.util.Objects;
 
 public class Stdin
 {
+	public static String DEFAULT_CONFIRM_PROMPT = "Are you sure? ";
+
 	private final BufferedReader in;
 	private final PrintStream out;
 	public Stdin(InputStream is, PrintStream out)
@@ -72,12 +74,12 @@ public class Stdin
 	{
 		if (prompt == null || prompt.length() == 0)
 		{
-			prompt = "Are you sure? ";
+			prompt = DEFAULT_CONFIRM_PROMPT;
 		}
 
 		try
 		{
-			System.out.print(prompt);
+			out.print(prompt);
 			String input = in.readLine();
 			if (input == null || input.length() == 0)
 			{
