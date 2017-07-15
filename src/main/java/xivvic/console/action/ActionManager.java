@@ -36,8 +36,18 @@ public class ActionManager
 	public static final String	GLOBAL_CONTEXT	= "";
 	public static final String	DELIMITER	   = ".";
 
+	/**
+	 * Contexts are locations where actions are bound and form a (possibly empty for
+	 * global actions) prefix that gets added to a command for lookup.
+	 */
 	private final Set<String>         contexts = new HashSet<>();
 	private final Map<String, Action> commands = new HashMap<>();
+
+	/**
+	 * Specials are actions that are invoked as part of the application's life-cycle, rather
+	 * than through user interaction. An example would be cleanup actions that happen upon
+	 * termination.
+	 */
 	private final Map<ActionTiming, List<Action>> specials = new HashMap<>();
 
 	public ActionManager() {}

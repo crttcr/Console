@@ -19,6 +19,8 @@ public class ConsoleUtils
 	public static final int      NO_SELECTION = -1;
 	public static final String        NEWLINE = System.getProperty("line.separator");
 
+	private static Stdin stdin = new Stdin(System.in, System.out);
+
 	public static int userSelect(List<Object> list)
 	{
 		if (list == null || list.size() == 0)
@@ -39,7 +41,7 @@ public class ConsoleUtils
 		}
 
 		System.out.println("Choose from the list above by #");
-		int choice = Stdin.getInt();
+		int choice = stdin.getInt();
 		if (choice == 0 || choice > list.size())
 		{
 			return NO_SELECTION;
@@ -61,7 +63,7 @@ public class ConsoleUtils
 	public static int[] userInts(String prompt)
 	{
 		System.out.println(prompt);
-		String s = Stdin.getString();
+		String s = stdin.getString();
 
 		if (s == null || s.length() == 0)
 		{
@@ -117,7 +119,7 @@ public class ConsoleUtils
 		}
 
 		System.out.println("Choose from the list above by #");
-		int choice = Stdin.getInt();
+		int choice = stdin.getInt();
 		if (choice == 0 || choice > array.length)
 		{
 			return NO_SELECTION;

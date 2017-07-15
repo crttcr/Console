@@ -1,6 +1,5 @@
 package xivvic.console.interact;
 
-//
 // Simple methods for reading from standard system input from the console.
 // These methods will pause and wait for input until ENTER is pressed.
 // The data is converted to the proper type and returned to the caller.
@@ -25,20 +24,34 @@ package xivvic.console.interact;
 //
 // Thank you.
 //
+//
+// CRT: Modified
+//
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.text.NumberFormat;
+import java.util.Objects;
 
 public class Stdin
 {
+	private final BufferedReader in;
+	private final PrintStream out;
+	public Stdin(InputStream is, PrintStream out)
+	{
+		Objects.requireNonNull(is);
+		this.out = Objects.requireNonNull(out);
+		this.in  = new BufferedReader(new InputStreamReader(is));
+	}
 
-	static InputStreamReader	converter	= new InputStreamReader(System.in);
-
-	static BufferedReader		in				= new BufferedReader(converter);
+	//	static InputStreamReader	converter	 = new InputStreamReader(System.in);
+	//	static BufferedReader		       in	 = new BufferedReader(converter);
 
 	// Read a String from standard system input
-	public static String getString()
+	//
+	public String getString()
 	{
 		try
 		{
@@ -46,22 +59,62 @@ public class Stdin
 		}
 		catch (Exception e)
 		{
-			System.out.println("getString() exception, returning empty string");
+			out.println("getString() exception, returning empty string");
 			return "";
 		}
 	}
-	
-	public static String promptString(String prompt, String def)
+
+	// Confirms a user action, returning true if the response is
+	//
+	// "y" or "yes"
+	//
+	public boolean confirm(String prompt, boolean def)
 	{
 		if (prompt == null || prompt.length() == 0)
-			prompt = "input? ";
+		{
+			prompt = "Are you sure? ";
+		}
 
 		try
 		{
 			System.out.print(prompt);
 			String input = in.readLine();
 			if (input == null || input.length() == 0)
+			{
+				return def;
+			}
+
+			String lower = input.trim().toLowerCase();
+
+			if (lower.equals("y") || lower.equals("yes"))
+			{
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception e)
+		{
+			out.println("Exception confirming user action. Returning false.");
+			return false;
+		}
+	}
+
+	public String promptString(String prompt, String def)
+	{
+		if (prompt == null || prompt.length() == 0)
+		{
+			prompt = "input? ";
+		}
+
+		try
+		{
+			System.out.print(prompt);
+			String input = in.readLine();
+			if (input == null || input.length() == 0)
+			{
 				return def == null ? "" : def;
+			}
 			return input;
 		}
 		catch (Exception e)
@@ -72,17 +125,24 @@ public class Stdin
 	}
 
 	// Read a char from standard system input
-	public static char getChar()
+	//
+	public char getChar()
 	{
 		String s = getString();
-		if (s.length() >= 1) return s.charAt(0);
+		if (s.length() >= 1)
+		{
+			return s.charAt(0);
+		}
 		else
+		{
 			return '\n';
+		}
 	}
 
 	// Read a Number as a String from standard system input
 	// Return the Number
-	public static Number getNumber()
+	//
+	public Number getNumber()
 	{
 		String numberString = getString();
 		try
@@ -93,25 +153,28 @@ public class Stdin
 		catch (Exception e)
 		{
 			// if any exception occurs, just give a 0 back
-			System.out.println("getNumber() exception, returning 0");
+			out.println("getNumber() exception, returning 0");
 			return new Integer(0);
 		}
 	}
 
 	// Read an integer from standard system input
-	public static int getInt()
+	//
+	public int getInt()
 	{
 		return getNumber().intValue();
 	}
 
 	// Read a float from standard system input
-	public static float getFloat()
+	//
+	public float getFloat()
 	{
 		return getNumber().floatValue();
 	}
 
 	// Read a double from standard system input
-	public static double getDouble()
+	//
+	public double getDouble()
 	{
 		return getNumber().doubleValue();
 	}

@@ -57,6 +57,7 @@ public class MenuManager
 		};
 
 		am.register(action, null, "bye");
+		am.register(action, null, "later");
 		am.register(action, null, "exit");
 		am.register(action, null, "quit");
 

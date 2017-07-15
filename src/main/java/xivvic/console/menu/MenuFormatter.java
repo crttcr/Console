@@ -57,11 +57,11 @@ public class MenuFormatter
 			sb.append(": ");
 			if (item.is_enabled())
 			{
-				sb.append(" Enabled- ");
+				sb.append("    	 ");
 			}
 			else
 			{
-				sb.append(" Disabled ");
+				sb.append(" [X]	 ");
 			}
 			sb.append(": ");
 			sb.append(item.text());
@@ -90,10 +90,10 @@ public class MenuFormatter
 	{
 		if (isSubmenu)
 		{
-			return "Return to previous menu";
+			return "Up to previous menu";
 		}
 
-		return "Exit the application";
+		return "Exit application";
 	}
 
 }

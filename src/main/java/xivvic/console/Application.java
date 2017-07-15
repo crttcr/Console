@@ -41,7 +41,6 @@ public class Application
 
 	private BatchAction batchCallback = null;
 
-	private Action completeAction;
 	private PrintStream out = System.out;
 	private MenuManager mm;
 	private ActionManager am;
@@ -100,7 +99,11 @@ public class Application
 	}
 
 
-	protected void setUp()
+	/**
+	 * Runs all INITIALIZE and POST_INITIALIZE actions.
+	 *
+	 */
+	protected void setup()
 	{
 		ActionTiming[] at = { INITIALIZE, POST_INITIALIZE };
 
@@ -116,22 +119,21 @@ public class Application
 		}
 	}
 
-	private void complete()
+	private void teardown()
 	{
-		if (completeAction == null)
+		setMessage("Terminating console application.");
+		out.println(message);
+		List<Action> actions = am.getActionsFor(SHUTDOWN);
+		for (Action a : actions)
 		{
-			setMessage("Done.");
-			out.println(message);
-		}
-		else
-		{
-			completeAction.invoke(null);
+			a.invoke(null);
 		}
 	}
 
 	public void run()
 	{
 		String    input = null;
+		Stdin     stdin = new Stdin(System.in, System.out);
 
 		while (true)
 		{
@@ -145,7 +147,7 @@ public class Application
 					out.println(msg);
 				}
 
-				input = Stdin.getString();
+				input = stdin.getString();
 			}
 			while (! mm.isValidSelection(input));
 
@@ -161,10 +163,10 @@ public class Application
 
 	public void doLifecycle()
 	{
-		setUp();
+		setup();
 		batch();
 		run();
-		complete();
+		teardown();
 	}
 
 	private void setMessage(String m)
