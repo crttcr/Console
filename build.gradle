@@ -23,10 +23,12 @@ dependencies
 {
 	capsule 'co.paralleluniverse:capsule:1.0.1'
 
-	implementation 'org.projectlombok:lombok:1.16.16'
-	implementation 'com.xivvic:java-util:0.1+'
+	implementation 'com.xivvic:java-util:0.2+'
 
- 	compile 'com.google.dagger:dagger:2.0.1'
+	implementation 'org.apache.commons:commons-lang3:3.6'
+	implementation 'org.projectlombok:lombok:1.16.16'
+
+ //	compile 'com.google.dagger:dagger:2.0.1'
 	compile 'org.slf4j:slf4j-api:1.7.7'
 
 	testCompile 'junit:junit:4.12'

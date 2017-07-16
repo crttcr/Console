@@ -4,6 +4,8 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
 import xivvic.util.text.TextFormatter;
 
 public class MenuFormatter
@@ -32,8 +34,8 @@ public class MenuFormatter
 		String line = TextFormatter.edgedLine('*', '-', width);
 		sb.append(line);
 		sb.append("\n");
-		String box = TextFormatter.padLeft(headerText, 3 + headerText.length(), ' ');
-		box = TextFormatter.pad(box, width, ' ');
+		String box = StringUtils.leftPad(headerText, 3 + headerText.length(), ' ');
+		box = StringUtils.rightPad(box, width, ' ');
 		sb.append("*");
 		sb.append(box);
 		sb.append("*");
@@ -47,12 +49,12 @@ public class MenuFormatter
 		while (it.hasNext())
 		{
 			MenuItem item = it.next();
-			String  number = TextFormatter.padLeft(Integer.toString(index), 2, ' ');
+			String  number = StringUtils.leftPad(Integer.toString(index), 2, ' ');
 			sb.append(number);
 			index++;
 			sb.append(": ");
 			String sc = item.shortcut();
-			String text = TextFormatter.pad(sc, 8, ' ');
+			String text = StringUtils.rightPad(sc, 8, ' ');
 			sb.append(text);
 			sb.append(": ");
 			if (item.is_enabled())
@@ -68,10 +70,10 @@ public class MenuFormatter
 			sb.append("\n");
 		}
 
-		String number = TextFormatter.padLeft(Integer.toString(0), 2, ' ');
+		String number = StringUtils.leftPad(Integer.toString(0), 2, ' ');
 		sb.append(number);
 		sb.append(": ");
-		String text = TextFormatter.pad(null, 8, ' ');
+		String text = StringUtils.rightPad(null, 8, ' ');
 		sb.append(text);
 		sb.append(": ");
 
