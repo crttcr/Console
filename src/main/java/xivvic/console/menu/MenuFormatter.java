@@ -59,11 +59,11 @@ public class MenuFormatter
 			sb.append(": ");
 			if (item.is_enabled())
 			{
-				sb.append("    	 ");
+				sb.append("          ");
 			}
 			else
 			{
-				sb.append(" [X]	 ");
+				sb.append(" disabled ");
 			}
 			sb.append(": ");
 			sb.append(item.text());
