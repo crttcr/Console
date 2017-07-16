@@ -1,6 +1,5 @@
 package xivvic.console.interact;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import java.util.List;
  * This is information represents a choice that a user can make.  It typically exists
  * within a Choices object.  It also contains a list of UserInput objects that will guide
  * the user to provide configuration information associated with this choice.
- * 
+ *
  * @author reid
  *
  */
@@ -18,7 +17,7 @@ public class Choice
 	private final String description;
 	private       List<UserInput> list;
 	private       String[] bindings;
-	
+
 	public Choice(String label, String desc)
 	{
 		this.label = label;
@@ -38,19 +37,25 @@ public class Choice
 	public void addInput(UserInput input)
 	{
 		if (input == null)
+		{
 			return;
-		
+		}
+
 		if (list == null)
-			list = new LinkedList<UserInput>();
-		
+		{
+			list = new LinkedList<>();
+		}
+
 		list.add(input);
 	}
-	
+
 	public UserInput[] inputs()
 	{
 		if (list == null)
+		{
 			return new UserInput[0];
-		
+		}
+
 		return list.toArray(new UserInput[0]);
 	}
 
@@ -58,7 +63,7 @@ public class Choice
 	{
 		return bindings;
 	}
-	
+
 	public void setBindings(String[] values)
 	{
 		if (values == null)
@@ -67,10 +72,11 @@ public class Choice
 		}
 		else
 		{
-			bindings = Arrays.copyOf(values, values.length);
+			bindings = values.clone();
 		}
 	}
 
+	@Override
 	public String toString()
 	{
 		return "Choice(" + label + ", " + inputCount() + ", " + bindingCount() + ")";
@@ -78,18 +84,12 @@ public class Choice
 
 	private int inputCount()
 	{
-		if (list == null)
-			return 0;
-		
-		return list.size();
+		return list == null ? 0 : list.size();
 	}
-	
+
 	private int bindingCount()
 	{
-		if (bindings == null)
-			return 0;
-		
-		return bindings.length;
+		return bindings == null ? 0 : bindings.length;
 	}
 
 }
