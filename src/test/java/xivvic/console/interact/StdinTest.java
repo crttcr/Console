@@ -3,6 +3,7 @@ package xivvic.console.interact;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -10,6 +11,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import org.junit.After;
@@ -177,6 +180,113 @@ public class StdinTest
 		// Assert
 		//
 		assertEquals(1.654, result, EPSILON);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void onGSFLWD_withNullChoices_thenThrowException()
+	{
+		subject.getStringFromListWithDefault(null, "Hello", 0);
+	}
+
+	@Test
+	public void onGSFLWD_withEmptyChoices_thenReturnNull()
+	{
+		List<String> empty = Arrays.asList();
+		assertNull(subject.getStringFromListWithDefault(empty, "Please choose", 0));
+	}
+
+	@Test
+	public void onGSFLWD_withNegativeDefault_thenReturnNull()
+	{
+		List<String> choices = Arrays.asList("a");
+		assertNull(subject.getStringFromListWithDefault(choices, "Please choose", -1));
+	}
+
+	@Test
+	public void onGSFLWD_withDefaultOutOfRange_thenReturnNull()
+	{
+		List<String> choices = Arrays.asList("a");
+		assertNull(subject.getStringFromListWithDefault(choices, "Please choose", 3));
+	}
+
+	@Test
+	public void onGSFLWD_withEmptyResponse_thenChooseDefault()
+	{
+		// Arrange
+		//
+		int dv = 1;
+		List<String> choices = Arrays.asList("a", "b", "c");
+		InputStream is = inputStreamForString("\n");
+		subject = new Stdin(is, printstream);
+
+		// Act
+		//
+		String choice = subject.getStringFromListWithDefault(choices, "Please choose", dv);
+
+		// Assert
+		//
+		assertEquals(choices.get(dv), choice);
+	}
+
+	@Test
+	public void onGSFLWD_withValidStringResponse_thenReturnChoice()
+	{
+		// Arrange
+		//
+		int dv = 1;
+		String target = "ape";
+		List<String> choices = Arrays.asList("apple", "app", target, "ant");
+		InputStream is = inputStreamForString("ape\n");
+		subject = new Stdin(is, printstream);
+
+		// Act
+		//
+		String choice = subject.getStringFromListWithDefault(choices, "Please choose", dv);
+
+		// Assert
+		//
+		assertEquals(target, choice);
+	}
+
+	@Test
+	public void onGSFLWD_withEventualValidStringResponse_thenReturnChoice()
+	{
+		// Arrange
+		//
+		int dv = 1;
+		String target = "ape";
+		List<String> choices = Arrays.asList("apple", "app", target, "ant");
+		InputStream is = inputStreamForString("blast\nape\n");
+		subject = new Stdin(is, printstream);
+
+		// Act
+		//
+		String choice = subject.getStringFromListWithDefault(choices, "Please choose", dv);
+
+		// Assert
+		//
+		assertEquals(target, choice);
+	}
+
+
+	@Test
+	public void onGSFLWD_withEventualValidIndexResponse_thenReturnChoice()
+	{
+		// Arrange
+		//
+		int dv = 1;
+		String target = "ape";
+		List<String> choices = Arrays.asList("apple", "app", target, "ant");
+		InputStream is = inputStreamForString("blast\n2\n");
+		subject = new Stdin(is, printstream);
+
+		// Act
+		//
+		String choice = subject.getStringFromListWithDefault(choices, "Please choose", dv);
+
+		// Assert
+		//
+		assertEquals(target, choice);
 	}
 
 

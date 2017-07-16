@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Objects;
 
 public class Stdin
@@ -48,11 +49,6 @@ public class Stdin
 		this.in  = new BufferedReader(new InputStreamReader(is));
 	}
 
-	//	static InputStreamReader	converter	 = new InputStreamReader(System.in);
-	//	static BufferedReader		       in	 = new BufferedReader(converter);
-
-	// Read a String from standard system input
-	//
 	public String getString()
 	{
 		try
@@ -66,10 +62,60 @@ public class Stdin
 		}
 	}
 
-	// Confirms a user action, returning true if the response is
-	//
-	// "y" or "yes"
-	//
+	public String getStringFromListWithDefault(List<String> choices, String prompt, int def)
+	{
+		Objects.requireNonNull(choices);
+
+		if (def < 0 || def >= choices.size())
+		{
+			return null;
+		}
+
+		if (choices.size() == 0)
+		{
+			return null;
+		}
+
+		if (prompt == null || prompt.trim().length() == 0)
+		{
+			prompt = "Chose among the following items: ";
+		}
+
+		String dv = choices.get(def);
+		String fmt = "%2d -- %s\n";
+
+		while (true)
+		{
+			out.printf("%s [%s]", prompt, dv);
+			for (int i = 0; i < choices.size(); i++)
+			{
+				out.printf(fmt, i, choices.get(i));
+			}
+
+			out.print("Selection --> ");
+
+			String choice = getString();
+			if (choice == null || choice.trim().length() == 0)
+			{
+				return dv;
+			}
+
+			Integer index = attemptToRecognizeUserInputAsChoice(choices, choice);
+			if (index != null)
+			{
+				return choices.get(index.intValue());
+			}
+
+			out.printf("Response [%s] is not valid. Choose another item or its index", choice);
+		}
+	}
+
+
+
+	/**
+	 * Confirms a user action, returning true if the response is "y" or "yes"
+	 *
+	 */
 	public boolean confirm(String prompt, boolean def)
 	{
 		if (prompt == null || prompt.length() == 0)
@@ -155,30 +201,65 @@ public class Stdin
 		catch (Exception e)
 		{
 			// if any exception occurs, just give a 0 back
+			//
+			// ^^^
+			// This is a dubious strategy, that was part of the original
+			// implementation. Will need to consider a better approach.
+			//
 			out.println("getNumber() exception, returning 0");
 			return new Integer(0);
 		}
 	}
 
-	// Read an integer from standard system input
-	//
 	public int getInt()
 	{
 		return getNumber().intValue();
 	}
 
-	// Read a float from standard system input
-	//
 	public float getFloat()
 	{
 		return getNumber().floatValue();
 	}
 
-	// Read a double from standard system input
-	//
 	public double getDouble()
 	{
 		return getNumber().doubleValue();
 	}
+
+	private Integer attemptToRecognizeUserInputAsChoice(List<String> choices, String choice)
+	{
+		if (choices == null || choices.size() == 0)
+		{
+			return null;
+		}
+
+		if (choice == null || choice.length() == 0)
+		{
+			return null;
+		}
+
+		try
+		{
+			int i = Integer.parseInt(choice);
+			if (i >= 0 || i < choices.size())
+			{
+				return i;
+			}
+		}
+		catch (NumberFormatException e)
+		{
+			// Not an integer.
+			// Fall through and try to match choice to one of the items in the list.
+		}
+
+		int pos = choices.indexOf(choice);
+		if (pos == -1)
+		{
+			return null;
+		}
+
+		return pos;
+	}
+
 
 }
